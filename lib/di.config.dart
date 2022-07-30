@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart' as _i3;
 
 import 'core/cache_service/cache_service.dart' as _i4;
 import 'core/cache_service/sp_cache_service_impl.dart' as _i5;
-import 'di.dart' as _i14;
+import 'di.dart' as _i15;
 import 'features/inventory_management/data/data_sources/inventory_local_data_source.dart'
     as _i6;
 import 'features/inventory_management/data/data_sources/inventory_local_data_source_impl.dart'
@@ -26,7 +26,9 @@ import 'features/inventory_management/domain/usecases/delete_inventory_item.dart
 import 'features/inventory_management/domain/usecases/get_inventory_items.dart'
     as _i13;
 import 'features/inventory_management/domain/usecases/update_inventory_item.dart'
-    as _i10; // ignore_for_file: unnecessary_lambdas
+    as _i10;
+import 'features/inventory_management/presentation/bloc/inventory_listing_bloc.dart'
+    as _i14; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -50,7 +52,9 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       _i12.DeleteInventoryItem(repository: get<_i8.InventoryRepository>()));
   gh.lazySingleton<_i13.GetInventoryItems>(
       () => _i13.GetInventoryItems(repository: get<_i8.InventoryRepository>()));
+  gh.factory<_i14.InventoryListingBloc>(
+      () => _i14.InventoryListingBloc(get<_i13.GetInventoryItems>()));
   return get;
 }
 
-class _$RegisterModule extends _i14.RegisterModule {}
+class _$RegisterModule extends _i15.RegisterModule {}

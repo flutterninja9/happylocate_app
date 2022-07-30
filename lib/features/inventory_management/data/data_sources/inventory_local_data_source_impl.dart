@@ -32,12 +32,13 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
 
   @override
   Future<List<InventoryItemModel>> getInventoryItems() async {
-    final String jsonStr = await cacheService.getData(kInventoryItemsKey);
-    if (jsonStr.isEmpty) {
+    try {
+      final String jsonStr = await cacheService.getData(kInventoryItemsKey);
+      final List<Map<String, dynamic>> jsonList = jsonDecode(jsonStr);
+      return jsonList.map((json) => InventoryItemModel.fromJson(json)).toList();
+    } catch (e) {
       return [];
     }
-    final List<Map<String, dynamic>> jsonList = jsonDecode(jsonStr);
-    return jsonList.map((json) => InventoryItemModel.fromJson(json)).toList();
   }
 
   @override

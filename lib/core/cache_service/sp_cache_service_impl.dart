@@ -18,7 +18,7 @@ class SharedPrefCacheServiceImpl implements CacheService {
         await prefs.remove(key);
         return unit;
       }
-      throw CacheException('Key -> $key does not exist');
+      throw KeyDoesNotExistException('Key -> $key does not exist');
     });
   }
 
@@ -32,7 +32,7 @@ class SharedPrefCacheServiceImpl implements CacheService {
         }
         throw CacheException('No data found at $key');
       }
-      throw CacheException('Key -> $key does not exist');
+      throw KeyDoesNotExistException('Key -> $key does not exist');
     });
   }
 
