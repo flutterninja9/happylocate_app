@@ -5,6 +5,10 @@ class Dimension extends Entity {
   final num height;
   final num width;
 
+  factory Dimension.zero() {
+    return Dimension(height: 0, width: 0);
+  }
+
   Dimension({
     required this.height,
     required this.width,
