@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:happylocate_app/core/cache_service/cache_service.dart';
+import 'package:happylocate_app/core/cache_service/exceptions.dart';
 import 'package:happylocate_app/features/inventory_management/data/data_sources/inventory_local_data_source.dart';
 import 'package:happylocate_app/features/inventory_management/data/models/inventory_item_model.dart';
 import 'package:injectable/injectable.dart';
@@ -59,12 +60,16 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
 
   @override
   Future<List<InventoryItemModel>> getInventoryItems() async {
-    final String jsonStr = await cacheService.getData(kInventoryItemsKey);
-    final List jsonList = jsonDecode(jsonStr);
-    return jsonList
-        .map(
-            (json) => InventoryItemModel.fromJson(json as Map<String, dynamic>))
-        .toList();
+    try {
+      final String jsonStr = await cacheService.getData(kInventoryItemsKey);
+      final List jsonList = jsonDecode(jsonStr);
+      return jsonList
+          .map((json) =>
+              InventoryItemModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } on CacheException {
+      return [];
+    }
   }
 
   @override
