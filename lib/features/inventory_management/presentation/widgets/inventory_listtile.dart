@@ -32,7 +32,10 @@ class InventoryListile extends StatelessWidget {
                   Container(
                     height: 96,
                     width: 96,
-                    color: Colors.grey[200],
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
                   const SizedBox(width: 16),
                   SizedBox(

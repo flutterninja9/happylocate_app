@@ -1,6 +1,7 @@
 import 'package:happylocate_app/core/entity/entity.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/dimesion.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/item_type.dart';
+import 'package:uuid/uuid.dart';
 
 class InventoryItem extends Entity {
   final String id;
@@ -18,6 +19,16 @@ class InventoryItem extends Entity {
     required this.itemType,
     required this.quantity,
   });
+
+  factory InventoryItem.empty() {
+    return InventoryItem(
+      id: const Uuid().v4(),
+      name: '',
+      dimension: Dimension.zero(),
+      itemType: ItemType.fragile,
+      quantity: 1,
+    );
+  }
 
   @override
   String toString() {

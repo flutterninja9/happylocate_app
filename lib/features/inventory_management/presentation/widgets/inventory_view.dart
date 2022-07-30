@@ -8,6 +8,7 @@ import 'package:happylocate_app/features/inventory_management/presentation/widge
 class InventoryView extends StatefulWidget {
   final List<InventoryItem> items;
   final Function() onCheckout;
+  final Function() onAddManually;
   final Function(InventoryItem) onItemRemoved;
   final Function(InventoryItem, int) onQuantityChanged;
 
@@ -15,6 +16,7 @@ class InventoryView extends StatefulWidget {
     Key? key,
     required this.items,
     required this.onCheckout,
+    required this.onAddManually,
     required this.onItemRemoved,
     required this.onQuantityChanged,
   }) : super(key: key);
@@ -45,7 +47,7 @@ class _InventoryViewState extends State<InventoryView> {
             return true;
           },
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: CustomScrollView(
               slivers: [
                 SliverList(
@@ -56,7 +58,7 @@ class _InventoryViewState extends State<InventoryView> {
                           Text("$totalItems Items", style: headline),
                           const Spacer(),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: widget.onAddManually,
                             child: const Text("Add"),
                           ),
                         ],

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happylocate_app/core/widgets/hl_empty_state.dart';
 import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 import 'package:happylocate_app/di.dart';
-import 'package:happylocate_app/features/inventory_management/data/models/temp_inventory.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/bloc/inventory_listing_bloc.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_item_saved_screen.dart';
+import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_manual_entry_form.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/widgets/inventory_view.dart';
 
 class InventoryListingScreen extends StatefulWidget {
@@ -32,9 +32,20 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
               inventoryEmpty: (_) => HlEmptyState(
                 label: 'Your inventory is empty',
                 actionBtnLabel: 'Add inventory',
-                onTapAction: () => context.read<InventoryListingBloc>().add(
-                    InventoryListingEvent.addItem(
-                        tempInventoryData.first.toDomain())),
+                onTapAction: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return InventoryManualEntryForm(
+                        onAdd: (item) {
+                          context
+                              .read<InventoryListingBloc>()
+                              .add(InventoryListingEvent.addItem(item));
+                        },
+                      );
+                    },
+                  );
+                },
               ),
               loaded: (state) => InventoryView(
                 items: state.items,
@@ -51,6 +62,20 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
                     .read<InventoryListingBloc>()
                     .add(InventoryListingEvent.updateInventoryItemQty(
                         item, qty)),
+                onAddManually: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return InventoryManualEntryForm(
+                        onAdd: (item) {
+                          context
+                              .read<InventoryListingBloc>()
+                              .add(InventoryListingEvent.addItem(item));
+                        },
+                      );
+                    },
+                  );
+                },
               ),
               failure: (state) => Center(child: Text(state.message)),
             );
