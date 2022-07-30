@@ -18,6 +18,7 @@ class InventoryListile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: ValueKey(item.id),
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 30),
@@ -95,13 +96,13 @@ class InventoryListile extends StatelessWidget {
                       ),
                     ),
                     child: DropdownButton<int>(
+                      value: item.quantity,
                       icon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
                       ),
                       underline: const SizedBox(),
                       items: List.generate(100, (index) => index)
                           .map((index) => DropdownMenuItem(
-                                key: Key(index.toString()),
                                 value: index,
                                 child: Text(
                                   index.toString(),
