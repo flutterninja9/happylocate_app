@@ -17,24 +17,24 @@ class InventoryRepositoryImpl implements InventoryRepository {
   });
 
   @override
-  Future<Either<Failure, Unit>> addInventoryItem(
+  Future<Either<Failure, List<InventoryItem>>> addInventoryItem(
     InventoryItem item,
   ) async {
     return await _safeCallback(() async {
-      await localDataSource
+      final result = await localDataSource
           .addInventoryItem(InventoryItemModel.fromDomain(item));
-      return const Right(unit);
+      return Right(result.map((model) => model.toDomain()).toList());
     });
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteInventoryItem(
+  Future<Either<Failure, List<InventoryItem>>> deleteInventoryItem(
     InventoryItem item,
   ) async {
     return await _safeCallback(() async {
-      await localDataSource
+      final result = await localDataSource
           .deleteInventoryItem(InventoryItemModel.fromDomain(item));
-      return const Right(unit);
+      return Right(result.map((model) => model.toDomain()).toList());
     });
   }
 

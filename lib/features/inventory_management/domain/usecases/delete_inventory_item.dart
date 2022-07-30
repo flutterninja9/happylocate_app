@@ -6,13 +6,16 @@ import 'package:happylocate_app/features/inventory_management/domain/repositorie
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
-class DeleteInventoryItem implements Usecase<Unit, DeleteInventoryItemParams> {
+class DeleteInventoryItem
+    implements Usecase<List<InventoryItem>, DeleteInventoryItemParams> {
   final InventoryRepository repository;
   DeleteInventoryItem({
     required this.repository,
   });
   @override
-  Future<Either<Failure, Unit>> call(DeleteInventoryItemParams params) async {
+  Future<Either<Failure, List<InventoryItem>>> call(
+    DeleteInventoryItemParams params,
+  ) async {
     return repository.deleteInventoryItem(params.item);
   }
 }

@@ -33,4 +33,16 @@ class DimensionModel extends Model<Dimension> {
       'width': width,
     };
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DimensionModel &&
+        other.height == height &&
+        other.width == width;
+  }
+
+  @override
+  int get hashCode => height.hashCode ^ width.hashCode;
 }

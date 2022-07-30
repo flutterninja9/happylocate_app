@@ -19,21 +19,25 @@ mixin _$InventoryListingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getInventory,
-    required TResult Function(InventoryItem item) updateInventoryItem,
+    required TResult Function(InventoryItem item) addItem,
+    required TResult Function(InventoryItem item, int qty)
+        updateInventoryItemQty,
     required TResult Function(InventoryItem item) deleteItem,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
     required TResult orElse(),
   }) =>
@@ -41,21 +45,25 @@ mixin _$InventoryListingEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetInventory value) getInventory,
-    required TResult Function(_UpdateInventoryItem value) updateInventoryItem,
+    required TResult Function(_AddItem value) addItem,
+    required TResult Function(_UpdateInventoryItem value)
+        updateInventoryItemQty,
     required TResult Function(_DeleteItem value) deleteItem,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
     required TResult orElse(),
   }) =>
@@ -121,7 +129,9 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getInventory,
-    required TResult Function(InventoryItem item) updateInventoryItem,
+    required TResult Function(InventoryItem item) addItem,
+    required TResult Function(InventoryItem item, int qty)
+        updateInventoryItemQty,
     required TResult Function(InventoryItem item) deleteItem,
   }) {
     return getInventory();
@@ -131,7 +141,8 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
   }) {
     return getInventory?.call();
@@ -141,7 +152,8 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
     required TResult orElse(),
   }) {
@@ -155,7 +167,9 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetInventory value) getInventory,
-    required TResult Function(_UpdateInventoryItem value) updateInventoryItem,
+    required TResult Function(_AddItem value) addItem,
+    required TResult Function(_UpdateInventoryItem value)
+        updateInventoryItemQty,
     required TResult Function(_DeleteItem value) deleteItem,
   }) {
     return getInventory(this);
@@ -165,7 +179,8 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
   }) {
     return getInventory?.call(this);
@@ -175,7 +190,8 @@ class _$_GetInventory implements _GetInventory {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
     required TResult orElse(),
   }) {
@@ -191,11 +207,158 @@ abstract class _GetInventory implements InventoryListingEvent {
 }
 
 /// @nodoc
+abstract class _$$_AddItemCopyWith<$Res> {
+  factory _$$_AddItemCopyWith(
+          _$_AddItem value, $Res Function(_$_AddItem) then) =
+      __$$_AddItemCopyWithImpl<$Res>;
+  $Res call({InventoryItem item});
+}
+
+/// @nodoc
+class __$$_AddItemCopyWithImpl<$Res>
+    extends _$InventoryListingEventCopyWithImpl<$Res>
+    implements _$$_AddItemCopyWith<$Res> {
+  __$$_AddItemCopyWithImpl(_$_AddItem _value, $Res Function(_$_AddItem) _then)
+      : super(_value, (v) => _then(v as _$_AddItem));
+
+  @override
+  _$_AddItem get _value => super._value as _$_AddItem;
+
+  @override
+  $Res call({
+    Object? item = freezed,
+  }) {
+    return _then(_$_AddItem(
+      item == freezed
+          ? _value.item
+          : item // ignore: cast_nullable_to_non_nullable
+              as InventoryItem,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddItem implements _AddItem {
+  const _$_AddItem(this.item);
+
+  @override
+  final InventoryItem item;
+
+  @override
+  String toString() {
+    return 'InventoryListingEvent.addItem(item: $item)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AddItem &&
+            const DeepCollectionEquality().equals(other.item, item));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_AddItemCopyWith<_$_AddItem> get copyWith =>
+      __$$_AddItemCopyWithImpl<_$_AddItem>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getInventory,
+    required TResult Function(InventoryItem item) addItem,
+    required TResult Function(InventoryItem item, int qty)
+        updateInventoryItemQty,
+    required TResult Function(InventoryItem item) deleteItem,
+  }) {
+    return addItem(item);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? getInventory,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
+    TResult Function(InventoryItem item)? deleteItem,
+  }) {
+    return addItem?.call(item);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getInventory,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
+    TResult Function(InventoryItem item)? deleteItem,
+    required TResult orElse(),
+  }) {
+    if (addItem != null) {
+      return addItem(item);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetInventory value) getInventory,
+    required TResult Function(_AddItem value) addItem,
+    required TResult Function(_UpdateInventoryItem value)
+        updateInventoryItemQty,
+    required TResult Function(_DeleteItem value) deleteItem,
+  }) {
+    return addItem(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_GetInventory value)? getInventory,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
+    TResult Function(_DeleteItem value)? deleteItem,
+  }) {
+    return addItem?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetInventory value)? getInventory,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
+    TResult Function(_DeleteItem value)? deleteItem,
+    required TResult orElse(),
+  }) {
+    if (addItem != null) {
+      return addItem(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddItem implements InventoryListingEvent {
+  const factory _AddItem(final InventoryItem item) = _$_AddItem;
+
+  InventoryItem get item;
+  @JsonKey(ignore: true)
+  _$$_AddItemCopyWith<_$_AddItem> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 abstract class _$$_UpdateInventoryItemCopyWith<$Res> {
   factory _$$_UpdateInventoryItemCopyWith(_$_UpdateInventoryItem value,
           $Res Function(_$_UpdateInventoryItem) then) =
       __$$_UpdateInventoryItemCopyWithImpl<$Res>;
-  $Res call({InventoryItem item});
+  $Res call({InventoryItem item, int qty});
 }
 
 /// @nodoc
@@ -212,12 +375,17 @@ class __$$_UpdateInventoryItemCopyWithImpl<$Res>
   @override
   $Res call({
     Object? item = freezed,
+    Object? qty = freezed,
   }) {
     return _then(_$_UpdateInventoryItem(
       item == freezed
           ? _value.item
           : item // ignore: cast_nullable_to_non_nullable
               as InventoryItem,
+      qty == freezed
+          ? _value.qty
+          : qty // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -225,14 +393,16 @@ class __$$_UpdateInventoryItemCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_UpdateInventoryItem implements _UpdateInventoryItem {
-  const _$_UpdateInventoryItem(this.item);
+  const _$_UpdateInventoryItem(this.item, this.qty);
 
   @override
   final InventoryItem item;
+  @override
+  final int qty;
 
   @override
   String toString() {
-    return 'InventoryListingEvent.updateInventoryItem(item: $item)';
+    return 'InventoryListingEvent.updateInventoryItemQty(item: $item, qty: $qty)';
   }
 
   @override
@@ -240,12 +410,15 @@ class _$_UpdateInventoryItem implements _UpdateInventoryItem {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UpdateInventoryItem &&
-            const DeepCollectionEquality().equals(other.item, item));
+            const DeepCollectionEquality().equals(other.item, item) &&
+            const DeepCollectionEquality().equals(other.qty, qty));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(item));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(item),
+      const DeepCollectionEquality().hash(qty));
 
   @JsonKey(ignore: true)
   @override
@@ -257,32 +430,36 @@ class _$_UpdateInventoryItem implements _UpdateInventoryItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getInventory,
-    required TResult Function(InventoryItem item) updateInventoryItem,
+    required TResult Function(InventoryItem item) addItem,
+    required TResult Function(InventoryItem item, int qty)
+        updateInventoryItemQty,
     required TResult Function(InventoryItem item) deleteItem,
   }) {
-    return updateInventoryItem(item);
+    return updateInventoryItemQty(item, qty);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
   }) {
-    return updateInventoryItem?.call(item);
+    return updateInventoryItemQty?.call(item, qty);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
     required TResult orElse(),
   }) {
-    if (updateInventoryItem != null) {
-      return updateInventoryItem(item);
+    if (updateInventoryItemQty != null) {
+      return updateInventoryItemQty(item, qty);
     }
     return orElse();
   }
@@ -291,42 +468,47 @@ class _$_UpdateInventoryItem implements _UpdateInventoryItem {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetInventory value) getInventory,
-    required TResult Function(_UpdateInventoryItem value) updateInventoryItem,
+    required TResult Function(_AddItem value) addItem,
+    required TResult Function(_UpdateInventoryItem value)
+        updateInventoryItemQty,
     required TResult Function(_DeleteItem value) deleteItem,
   }) {
-    return updateInventoryItem(this);
+    return updateInventoryItemQty(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
   }) {
-    return updateInventoryItem?.call(this);
+    return updateInventoryItemQty?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
     required TResult orElse(),
   }) {
-    if (updateInventoryItem != null) {
-      return updateInventoryItem(this);
+    if (updateInventoryItemQty != null) {
+      return updateInventoryItemQty(this);
     }
     return orElse();
   }
 }
 
 abstract class _UpdateInventoryItem implements InventoryListingEvent {
-  const factory _UpdateInventoryItem(final InventoryItem item) =
+  const factory _UpdateInventoryItem(final InventoryItem item, final int qty) =
       _$_UpdateInventoryItem;
 
   InventoryItem get item;
+  int get qty;
   @JsonKey(ignore: true)
   _$$_UpdateInventoryItemCopyWith<_$_UpdateInventoryItem> get copyWith =>
       throw _privateConstructorUsedError;
@@ -398,7 +580,9 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getInventory,
-    required TResult Function(InventoryItem item) updateInventoryItem,
+    required TResult Function(InventoryItem item) addItem,
+    required TResult Function(InventoryItem item, int qty)
+        updateInventoryItemQty,
     required TResult Function(InventoryItem item) deleteItem,
   }) {
     return deleteItem(item);
@@ -408,7 +592,8 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
   }) {
     return deleteItem?.call(item);
@@ -418,7 +603,8 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getInventory,
-    TResult Function(InventoryItem item)? updateInventoryItem,
+    TResult Function(InventoryItem item)? addItem,
+    TResult Function(InventoryItem item, int qty)? updateInventoryItemQty,
     TResult Function(InventoryItem item)? deleteItem,
     required TResult orElse(),
   }) {
@@ -432,7 +618,9 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_GetInventory value) getInventory,
-    required TResult Function(_UpdateInventoryItem value) updateInventoryItem,
+    required TResult Function(_AddItem value) addItem,
+    required TResult Function(_UpdateInventoryItem value)
+        updateInventoryItemQty,
     required TResult Function(_DeleteItem value) deleteItem,
   }) {
     return deleteItem(this);
@@ -442,7 +630,8 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
   }) {
     return deleteItem?.call(this);
@@ -452,7 +641,8 @@ class _$_DeleteItem implements _DeleteItem {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetInventory value)? getInventory,
-    TResult Function(_UpdateInventoryItem value)? updateInventoryItem,
+    TResult Function(_AddItem value)? addItem,
+    TResult Function(_UpdateInventoryItem value)? updateInventoryItemQty,
     TResult Function(_DeleteItem value)? deleteItem,
     required TResult orElse(),
   }) {
@@ -478,6 +668,7 @@ mixin _$InventoryListingState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(List<InventoryItem> items) loaded,
+    required TResult Function() inventoryEmpty,
     required TResult Function(String message) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -485,6 +676,7 @@ mixin _$InventoryListingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -492,6 +684,7 @@ mixin _$InventoryListingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) =>
@@ -500,6 +693,7 @@ mixin _$InventoryListingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_InventoryEmpty value) inventoryEmpty,
     required TResult Function(_Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -507,6 +701,7 @@ mixin _$InventoryListingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -514,6 +709,7 @@ mixin _$InventoryListingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) =>
@@ -579,6 +775,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(List<InventoryItem> items) loaded,
+    required TResult Function() inventoryEmpty,
     required TResult Function(String message) failure,
   }) {
     return loading();
@@ -589,6 +786,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
   }) {
     return loading?.call();
@@ -599,6 +797,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -613,6 +812,7 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_InventoryEmpty value) inventoryEmpty,
     required TResult Function(_Failure value) failure,
   }) {
     return loading(this);
@@ -623,6 +823,7 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
   }) {
     return loading?.call(this);
@@ -633,6 +834,7 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -716,6 +918,7 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(List<InventoryItem> items) loaded,
+    required TResult Function() inventoryEmpty,
     required TResult Function(String message) failure,
   }) {
     return loaded(items);
@@ -726,6 +929,7 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
   }) {
     return loaded?.call(items);
@@ -736,6 +940,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -750,6 +955,7 @@ class _$_Loaded implements _Loaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_InventoryEmpty value) inventoryEmpty,
     required TResult Function(_Failure value) failure,
   }) {
     return loaded(this);
@@ -760,6 +966,7 @@ class _$_Loaded implements _Loaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
   }) {
     return loaded?.call(this);
@@ -770,6 +977,7 @@ class _$_Loaded implements _Loaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -787,6 +995,123 @@ abstract class _Loaded implements InventoryListingState {
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_InventoryEmptyCopyWith<$Res> {
+  factory _$$_InventoryEmptyCopyWith(
+          _$_InventoryEmpty value, $Res Function(_$_InventoryEmpty) then) =
+      __$$_InventoryEmptyCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InventoryEmptyCopyWithImpl<$Res>
+    extends _$InventoryListingStateCopyWithImpl<$Res>
+    implements _$$_InventoryEmptyCopyWith<$Res> {
+  __$$_InventoryEmptyCopyWithImpl(
+      _$_InventoryEmpty _value, $Res Function(_$_InventoryEmpty) _then)
+      : super(_value, (v) => _then(v as _$_InventoryEmpty));
+
+  @override
+  _$_InventoryEmpty get _value => super._value as _$_InventoryEmpty;
+}
+
+/// @nodoc
+
+class _$_InventoryEmpty implements _InventoryEmpty {
+  const _$_InventoryEmpty();
+
+  @override
+  String toString() {
+    return 'InventoryListingState.inventoryEmpty()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_InventoryEmpty);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function(List<InventoryItem> items) loaded,
+    required TResult Function() inventoryEmpty,
+    required TResult Function(String message) failure,
+  }) {
+    return inventoryEmpty();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
+    TResult Function(String message)? failure,
+  }) {
+    return inventoryEmpty?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
+    TResult Function(String message)? failure,
+    required TResult orElse(),
+  }) {
+    if (inventoryEmpty != null) {
+      return inventoryEmpty();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_InventoryEmpty value) inventoryEmpty,
+    required TResult Function(_Failure value) failure,
+  }) {
+    return inventoryEmpty(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
+    TResult Function(_Failure value)? failure,
+  }) {
+    return inventoryEmpty?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
+    TResult Function(_Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (inventoryEmpty != null) {
+      return inventoryEmpty(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InventoryEmpty implements InventoryListingState {
+  const factory _InventoryEmpty() = _$_InventoryEmpty;
 }
 
 /// @nodoc
@@ -855,6 +1180,7 @@ class _$_Failure implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(List<InventoryItem> items) loaded,
+    required TResult Function() inventoryEmpty,
     required TResult Function(String message) failure,
   }) {
     return failure(message);
@@ -865,6 +1191,7 @@ class _$_Failure implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
   }) {
     return failure?.call(message);
@@ -875,6 +1202,7 @@ class _$_Failure implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(List<InventoryItem> items)? loaded,
+    TResult Function()? inventoryEmpty,
     TResult Function(String message)? failure,
     required TResult orElse(),
   }) {
@@ -889,6 +1217,7 @@ class _$_Failure implements _Failure {
   TResult map<TResult extends Object?>({
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
+    required TResult Function(_InventoryEmpty value) inventoryEmpty,
     required TResult Function(_Failure value) failure,
   }) {
     return failure(this);
@@ -899,6 +1228,7 @@ class _$_Failure implements _Failure {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
   }) {
     return failure?.call(this);
@@ -909,6 +1239,7 @@ class _$_Failure implements _Failure {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
+    TResult Function(_InventoryEmpty value)? inventoryEmpty,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {

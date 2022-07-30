@@ -34,9 +34,20 @@ class InventoryItem extends Entity {
 
   @override
   int get hashCode {
-    return name.hashCode ^
-        dimension.hashCode ^
-        itemType.hashCode ^
-        quantity.hashCode;
+    return name.hashCode ^ dimension.hashCode ^ itemType.hashCode;
+  }
+
+  InventoryItem copyWith({
+    String? name,
+    Dimension? dimension,
+    ItemType? itemType,
+    int? quantity,
+  }) {
+    return InventoryItem(
+      name: name ?? this.name,
+      dimension: dimension ?? this.dimension,
+      itemType: itemType ?? this.itemType,
+      quantity: quantity ?? this.quantity,
+    );
   }
 }

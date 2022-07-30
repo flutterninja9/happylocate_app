@@ -52,8 +52,10 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
       _i12.DeleteInventoryItem(repository: get<_i8.InventoryRepository>()));
   gh.lazySingleton<_i13.GetInventoryItems>(
       () => _i13.GetInventoryItems(repository: get<_i8.InventoryRepository>()));
-  gh.factory<_i14.InventoryListingBloc>(
-      () => _i14.InventoryListingBloc(get<_i13.GetInventoryItems>()));
+  gh.factory<_i14.InventoryListingBloc>(() => _i14.InventoryListingBloc(
+      get<_i13.GetInventoryItems>(),
+      get<_i11.AddInventoryItem>(),
+      get<_i12.DeleteInventoryItem>()));
   return get;
 }
 

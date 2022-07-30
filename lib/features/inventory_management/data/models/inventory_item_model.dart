@@ -56,4 +56,33 @@ class InventoryItemModel extends Model<InventoryItem> {
       'quantity': quantity,
     };
   }
+
+  // helper method for comparing objects when updating in cache
+  bool replaceable(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is InventoryItemModel &&
+        other.name == name &&
+        other.dimension == dimension &&
+        other.itemType == itemType;
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is InventoryItemModel &&
+        other.name == name &&
+        other.dimension == dimension &&
+        other.itemType == itemType &&
+        other.quantity == quantity;
+  }
+
+  @override
+  int get hashCode {
+    return name.hashCode ^
+        dimension.hashCode ^
+        itemType.hashCode ^
+        quantity.hashCode;
+  }
 }

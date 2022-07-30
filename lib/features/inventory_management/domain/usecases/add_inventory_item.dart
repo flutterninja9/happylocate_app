@@ -6,13 +6,16 @@ import 'package:happylocate_app/features/inventory_management/domain/repositorie
 import 'package:injectable/injectable.dart';
 
 @LazySingleton()
-class AddInventoryItem implements Usecase<Unit, AddInventoryItemParams> {
+class AddInventoryItem
+    implements Usecase<List<InventoryItem>, AddInventoryItemParams> {
   final InventoryRepository repository;
   AddInventoryItem({
     required this.repository,
   });
   @override
-  Future<Either<Failure, Unit>> call(AddInventoryItemParams params) async {
+  Future<Either<Failure, List<InventoryItem>>> call(
+    AddInventoryItemParams params,
+  ) async {
     return repository.addInventoryItem(params.item);
   }
 }

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:happylocate_app/features/inventory_management/data/models/inventory_item_model.dart';
 
 /// Keys for the cache
@@ -9,10 +8,10 @@ const String kInventoryItemsKey = 'inventory_items';
 /// throws [CacheException]
 abstract class InventoryLocalDataSource {
   /// Responsible for saving the passed in [InventoryItemModel]
-  Future<Unit> addInventoryItem(InventoryItemModel item);
+  Future<List<InventoryItemModel>> addInventoryItem(InventoryItemModel item);
 
   /// Responsible for deleting the passed in [InventoryItemModel]
-  Future<Unit> deleteInventoryItem(InventoryItemModel item);
+  Future<List<InventoryItemModel>> deleteInventoryItem(InventoryItemModel item);
 
   /// Responsible for updating the passed in [InventoryItemModel]
   Future<InventoryItemModel> updateInventoryItem(

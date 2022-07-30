@@ -16,7 +16,7 @@ class InventoryItemSavedScreen extends StatelessWidget {
           children: [
             const Icon(Icons.done, color: secondaryColor, size: 96),
             const SizedBox(height: 16),
-            Text("Inventory Saved", style: title),
+            Text("Inventory Saved", style: headline),
             const SizedBox(height: 8),
             Text("We’ve sent you an email.", style: body1),
             const SizedBox(height: 67),

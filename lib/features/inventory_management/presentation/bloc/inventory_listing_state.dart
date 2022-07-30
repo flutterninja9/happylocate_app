@@ -5,5 +5,6 @@ class InventoryListingState with _$InventoryListingState {
   const factory InventoryListingState.loading() = _Loading;
   const factory InventoryListingState.loaded(List<InventoryItem> items) =
       _Loaded;
+  const factory InventoryListingState.inventoryEmpty() = _InventoryEmpty;
   const factory InventoryListingState.failure(String message) = _Failure;
 }

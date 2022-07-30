@@ -4,10 +4,13 @@ import 'package:happylocate_app/features/inventory_management/domain/entities/in
 
 abstract class InventoryRepository {
   /// Responsible for saving the passed in [InventoryItem]
-  Future<Either<Failure, Unit>> addInventoryItem(InventoryItem item);
+  /// and returns the updated [InventoryItem] if successful.
+  Future<Either<Failure, List<InventoryItem>>> addInventoryItem(
+      InventoryItem item);
 
   /// Responsible for deleting the passed in [InventoryItem]
-  Future<Either<Failure, Unit>> deleteInventoryItem(InventoryItem item);
+  Future<Either<Failure, List<InventoryItem>>> deleteInventoryItem(
+      InventoryItem item);
 
   /// Responsible for updating the passed in [InventoryItem]
   Future<Either<Failure, InventoryItem>> updateInventoryItem(

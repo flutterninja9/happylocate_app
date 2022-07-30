@@ -13,11 +13,6 @@ final headline4 = GoogleFonts.roboto(
   fontWeight: FontWeight.w400,
 );
 
-final title = GoogleFonts.roboto(
-  fontSize: 20,
-  fontWeight: FontWeight.w500,
-);
-
 final body1 = GoogleFonts.roboto(
   fontSize: 16,
   fontWeight: FontWeight.w400,

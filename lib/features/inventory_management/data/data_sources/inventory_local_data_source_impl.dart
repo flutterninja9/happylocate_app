@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:happylocate_app/core/cache_service/cache_service.dart';
 import 'package:happylocate_app/features/inventory_management/data/data_sources/inventory_local_data_source.dart';
 import 'package:happylocate_app/features/inventory_management/data/models/inventory_item_model.dart';
@@ -14,29 +13,63 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   });
 
   @override
-  Future<Unit> addInventoryItem(
+  Future<List<InventoryItemModel>> addInventoryItem(
     InventoryItemModel item,
   ) async {
-    return cacheService.setData(
+    final List<InventoryItemModel> items = await getInventoryItems();
+    for (int i = 0; i < items.length; i++) {
+      final currentItem = items[i];
+      if (currentItem.replaceable(item)) {
+        items.insert(i, item);
+        await cacheService.setData(
+          kInventoryItemsKey,
+          jsonEncode(items.map((model) => model.toJson()).toList()),
+        );
+        return items;
+      }
+    }
+
+    items.add(item);
+    await cacheService.setData(
       kInventoryItemsKey,
-      jsonEncode(item.toJson()),
+      jsonEncode(items.map((model) => model.toJson()).toList()),
     );
+
+    return items;
   }
 
   @override
-  Future<Unit> deleteInventoryItem(
+  Future<List<InventoryItemModel>> deleteInventoryItem(
     InventoryItemModel item,
   ) async {
-    return cacheService.deleteData(kInventoryItemsKey);
+    final List<InventoryItemModel> items = await getInventoryItems();
+    for (int i = 0; i < items.length; i++) {
+      final currentItem = items[i];
+      if (currentItem == item) {
+        items.removeAt(i);
+        await cacheService.setData(
+          kInventoryItemsKey,
+          jsonEncode(items.map((model) => model.toJson()).toList()),
+        );
+        return items;
+      }
+    }
+    return items;
   }
 
   @override
   Future<List<InventoryItemModel>> getInventoryItems() async {
     try {
+      // return tempInventoryData;
       final String jsonStr = await cacheService.getData(kInventoryItemsKey);
-      final List<Map<String, dynamic>> jsonList = jsonDecode(jsonStr);
-      return jsonList.map((json) => InventoryItemModel.fromJson(json)).toList();
-    } catch (e) {
+      final List jsonList = jsonDecode(jsonStr);
+      return jsonList
+          .map((json) =>
+              InventoryItemModel.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e, s) {
+      print(e);
+      print(s);
       return [];
     }
   }
