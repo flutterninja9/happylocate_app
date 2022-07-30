@@ -10,14 +10,16 @@ class InventoryView extends StatefulWidget {
   final Function() onCheckout;
   final Function() onAddManually;
   final Function(InventoryItem) onItemRemoved;
+  final Function(InventoryItem) onItemEdit;
   final Function(InventoryItem, int) onQuantityChanged;
 
   const InventoryView({
     Key? key,
     required this.items,
     required this.onCheckout,
-    required this.onAddManually,
     required this.onItemRemoved,
+    required this.onItemEdit,
+    required this.onAddManually,
     required this.onQuantityChanged,
   }) : super(key: key);
 
@@ -74,6 +76,7 @@ class _InventoryViewState extends State<InventoryView> {
                       return InventoryListile(
                         item: item,
                         onItemRemoved: widget.onItemRemoved,
+                        onItemEdit: widget.onItemEdit,
                         onQuantityChanged: widget.onQuantityChanged,
                       );
                     },

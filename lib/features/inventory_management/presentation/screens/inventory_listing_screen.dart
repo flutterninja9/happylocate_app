@@ -4,8 +4,9 @@ import 'package:happylocate_app/core/widgets/hl_empty_state.dart';
 import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 import 'package:happylocate_app/di.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/bloc/inventory_listing_bloc.dart';
+import 'package:happylocate_app/features/inventory_management/presentation/screens/create_inventory_item_form.dart';
+import 'package:happylocate_app/features/inventory_management/presentation/screens/edit_inventory_item_form.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_item_saved_screen.dart';
-import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_manual_entry_form.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/widgets/inventory_view.dart';
 
 class InventoryListingScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
                   showModalBottomSheet(
                     context: context,
                     builder: (_) {
-                      return InventoryManualEntryForm(
+                      return CreateInventoryItemForm(
                         onAdd: (item) {
                           context
                               .read<InventoryListingBloc>()
@@ -66,7 +67,22 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
                   showModalBottomSheet(
                     context: context,
                     builder: (_) {
-                      return InventoryManualEntryForm(
+                      return CreateInventoryItemForm(
+                        onAdd: (item) {
+                          context
+                              .read<InventoryListingBloc>()
+                              .add(InventoryListingEvent.addItem(item));
+                        },
+                      );
+                    },
+                  );
+                },
+                onItemEdit: (item) {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) {
+                      return EditInventoryItemForm(
+                        item: item,
                         onAdd: (item) {
                           context
                               .read<InventoryListingBloc>()
