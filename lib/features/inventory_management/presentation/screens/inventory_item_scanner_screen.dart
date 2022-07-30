@@ -12,8 +12,8 @@ class InventoryItemScannerScreen extends StatefulWidget {
       _InventoryItemScannerScreenState();
 }
 
-class _InventoryItemScannerScreenState
-    extends State<InventoryItemScannerScreen> {
+class _InventoryItemScannerScreenState extends State<InventoryItemScannerScreen>
+    with WidgetsBindingObserver {
   late List<CameraDescription> cameras;
   late CameraController controller;
   bool cameraReady = false;
@@ -22,35 +22,59 @@ class _InventoryItemScannerScreenState
   @override
   void initState() {
     super.initState();
-    initCamera();
+    fetchAvailableCameras().then((des) => initCamera(des));
   }
 
-  Future<void> initCamera() async {
-    await availableCameras().then((fetchedCameras) {
-      try {
-        cameras = fetchedCameras;
-        controller = CameraController(cameras.first, ResolutionPreset.medium);
-        controller.initialize().then((_) {
-          if (!mounted) {
-            return;
-          }
-          setState(() {
-            cameraReady = true;
-          });
-        });
-      } catch (e) {
-        if (e is CameraException) {
-          setState(() {
-            cameraStatus = "Please allow camera access for proceeding";
-          });
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    final CameraController? cameraController = controller;
+    if (cameraController == null || !cameraController.value.isInitialized) {
+      // handle not initialized
+      return;
+    } else if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      initCamera(cameras);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance?.addObserver(this);
+    super.didChangeDependencies();
+  }
+
+  Future<List<CameraDescription>> fetchAvailableCameras() async {
+    cameras = await availableCameras();
+    return cameras;
+  }
+
+  Future<void> initCamera(List<CameraDescription> description) async {
+    try {
+      controller = CameraController(cameras.first, ResolutionPreset.medium);
+      controller.initialize().then((_) {
+        if (!mounted) {
+          return;
         }
+        setState(() {
+          cameraReady = true;
+        });
+      });
+    } catch (e) {
+      if (e is CameraException) {
+        setState(() {
+          cameraStatus = "Please allow camera access for proceeding";
+        });
       }
-    });
+    }
   }
 
   @override
   void dispose() {
     controller.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
