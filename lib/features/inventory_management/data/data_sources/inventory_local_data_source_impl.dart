@@ -19,8 +19,8 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
     final List<InventoryItemModel> items = await getInventoryItems();
     for (int i = 0; i < items.length; i++) {
       final currentItem = items[i];
-      if (currentItem.replaceable(item)) {
-        items.insert(i, item);
+      if (currentItem.id == item.id) {
+        items[i] = item;
         await cacheService.setData(
           kInventoryItemsKey,
           jsonEncode(items.map((model) => model.toJson()).toList()),
@@ -45,7 +45,7 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
     final List<InventoryItemModel> items = await getInventoryItems();
     for (int i = 0; i < items.length; i++) {
       final currentItem = items[i];
-      if (currentItem == item) {
+      if (currentItem.id == item.id) {
         items.removeAt(i);
         await cacheService.setData(
           kInventoryItemsKey,
@@ -59,19 +59,12 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
 
   @override
   Future<List<InventoryItemModel>> getInventoryItems() async {
-    try {
-      // return tempInventoryData;
-      final String jsonStr = await cacheService.getData(kInventoryItemsKey);
-      final List jsonList = jsonDecode(jsonStr);
-      return jsonList
-          .map((json) =>
-              InventoryItemModel.fromJson(json as Map<String, dynamic>))
-          .toList();
-    } catch (e, s) {
-      print(e);
-      print(s);
-      return [];
-    }
+    final String jsonStr = await cacheService.getData(kInventoryItemsKey);
+    final List jsonList = jsonDecode(jsonStr);
+    return jsonList
+        .map(
+            (json) => InventoryItemModel.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 
   @override

@@ -5,12 +5,14 @@ import 'package:happylocate_app/features/inventory_management/domain/entities/in
 import 'package:happylocate_app/features/inventory_management/domain/entities/item_type.dart';
 
 class InventoryItemModel extends Model<InventoryItem> {
+  final String? id;
   final String? name;
   final DimensionModel? dimension;
   final String? itemType;
   final int? quantity;
 
   InventoryItemModel({
+    this.id,
     this.name,
     this.dimension,
     this.itemType,
@@ -19,6 +21,7 @@ class InventoryItemModel extends Model<InventoryItem> {
 
   factory InventoryItemModel.fromDomain(InventoryItem entity) {
     return InventoryItemModel(
+      id: entity.id,
       name: entity.name,
       dimension: DimensionModel.fromDomain(entity.dimension),
       itemType: entity.itemType.name,
@@ -28,6 +31,7 @@ class InventoryItemModel extends Model<InventoryItem> {
 
   factory InventoryItemModel.fromJson(Map<String, dynamic> json) {
     return InventoryItemModel(
+      id: json['id'] as String?,
       name: json['name'] as String?,
       dimension: json['dimension'] != null
           ? DimensionModel.fromJson(json['dimension'] as Map<String, dynamic>)
@@ -40,6 +44,7 @@ class InventoryItemModel extends Model<InventoryItem> {
   @override
   InventoryItem toDomain() {
     return InventoryItem(
+      id: id!,
       name: name!,
       dimension: dimension?.toDomain() ?? Dimension.zero(),
       itemType: itemTypeFromString(itemType!),
@@ -50,39 +55,11 @@ class InventoryItemModel extends Model<InventoryItem> {
   @override
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'dimension': dimension?.toJson(),
       'itemType': itemType,
       'quantity': quantity,
     };
-  }
-
-  // helper method for comparing objects when updating in cache
-  bool replaceable(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is InventoryItemModel &&
-        other.name == name &&
-        other.dimension == dimension &&
-        other.itemType == itemType;
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is InventoryItemModel &&
-        other.name == name &&
-        other.dimension == dimension &&
-        other.itemType == itemType &&
-        other.quantity == quantity;
-  }
-
-  @override
-  int get hashCode {
-    return name.hashCode ^
-        dimension.hashCode ^
-        itemType.hashCode ^
-        quantity.hashCode;
   }
 }

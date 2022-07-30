@@ -68,6 +68,9 @@ class InventoryListingBloc
         return _Failure(f.message);
       },
       (r) {
+        if (r.isEmpty) {
+          return const _InventoryEmpty();
+        }
         return _Loaded(r);
       },
     ));
@@ -88,6 +91,9 @@ class InventoryListingBloc
         return _Failure(f.message);
       },
       (r) {
+        if (r.isEmpty) {
+          return const _InventoryEmpty();
+        }
         return _Loaded(r);
       },
     ));

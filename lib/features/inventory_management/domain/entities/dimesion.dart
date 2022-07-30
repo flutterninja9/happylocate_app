@@ -16,4 +16,14 @@ class Dimension extends Entity {
 
   @override
   String toString() => '$height Feet X $width Feet';
+
+  Dimension copyWith({
+    num? height,
+    num? width,
+  }) {
+    return Dimension(
+      height: height ?? this.height,
+      width: width ?? this.width,
+    );
+  }
 }

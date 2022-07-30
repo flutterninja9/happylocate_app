@@ -3,6 +3,7 @@ import 'package:happylocate_app/features/inventory_management/domain/entities/di
 import 'package:happylocate_app/features/inventory_management/domain/entities/item_type.dart';
 
 class InventoryItem extends Entity {
+  final String id;
   final String name;
   final Dimension dimension;
   final ItemType itemType;
@@ -11,6 +12,7 @@ class InventoryItem extends Entity {
   bool get inStock => quantity > 0;
 
   InventoryItem({
+    required this.id,
     required this.name,
     required this.dimension,
     required this.itemType,
@@ -19,7 +21,7 @@ class InventoryItem extends Entity {
 
   @override
   String toString() {
-    return 'InventoryItem(name: $name, dimension: $dimension, itemType: $itemType, quantity: $quantity)';
+    return 'InventoryItem(id: $id, name: $name, dimension: $dimension, itemType: $itemType, quantity: $quantity)';
   }
 
   @override
@@ -38,12 +40,14 @@ class InventoryItem extends Entity {
   }
 
   InventoryItem copyWith({
+    String? id,
     String? name,
     Dimension? dimension,
     ItemType? itemType,
     int? quantity,
   }) {
     return InventoryItem(
+      id: id ?? this.id,
       name: name ?? this.name,
       dimension: dimension ?? this.dimension,
       itemType: itemType ?? this.itemType,
