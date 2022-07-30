@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:happylocate_app/core/extensions/build_context.dart';
@@ -28,22 +30,20 @@ class _InventoryItemScannerScreenState extends State<InventoryItemScannerScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-
-    final CameraController? cameraController = controller;
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      // handle not initialized
-      return;
-    } else if (state == AppLifecycleState.inactive) {
-      cameraController.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      initCamera(cameras);
-    }
+    handleAppLifeCycleChanges(state);
   }
 
   @override
   void didChangeDependencies() {
     WidgetsBinding.instance?.addObserver(this);
     super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
   }
 
   Future<List<CameraDescription>> fetchAvailableCameras() async {
@@ -71,11 +71,31 @@ class _InventoryItemScannerScreenState extends State<InventoryItemScannerScreen>
     }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
+  void handleAppLifeCycleChanges(AppLifecycleState state) {
+    final CameraController? cameraController = controller;
+    if (cameraController == null || !cameraController.value.isInitialized) {
+      // handle not initialized
+      return;
+    } else if (state == AppLifecycleState.inactive) {
+      cameraController.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      initCamera(cameras);
+    }
+  }
+
+  /// Stops recorded and navigates to listings page
+  Future<void> stopRecording() async {
+    try {
+      // recorded file
+      final XFile file = await controller.stopVideoRecording();
+      log('Saved');
+      setState(() {});
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const InventoryListingScreen()),
+      );
+    } catch (e) {
+      log('Error occured in stopping recorder: Details: ${e.toString()}');
+    }
   }
 
   @override
@@ -100,40 +120,30 @@ class _InventoryItemScannerScreenState extends State<InventoryItemScannerScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      if (controller.value.isRecordingVideo)
-                        ElevatedButton(
-                          onPressed: () async {
-                            await controller.pauseVideoRecording();
-                            setState(() {});
-                          },
-                          child: const Text('Pause'),
-                        )
-                      else
+                      if (!controller.value.isRecordingVideo)
                         ElevatedButton(
                           onPressed: () async {
                             await controller.startVideoRecording();
                             setState(() {});
                           },
                           child: const Text('Start Recording'),
-                        ),
-                      if (controller.value.isRecordingPaused)
-                        ElevatedButton(
-                          onPressed: () async {
-                            await controller.resumeVideoRecording();
-                            setState(() {});
-                          },
-                          child: const Text('Continue Recording'),
+                        )
+                      else
+                        Container(
+                          foregroundDecoration: const BoxDecoration(
+                            color: Colors.grey,
+                            backgroundBlendMode: BlendMode.saturation,
+                          ),
+                          child: const ElevatedButton(
+                            onPressed: null,
+                            child: Text('Start Recording'),
+                          ),
                         ),
                       const SizedBox(width: 12),
                       if (controller.value.isRecordingVideo)
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const InventoryListingScreen(),
-                              ),
-                            );
+                          onPressed: () async {
+                            await stopRecording();
                           },
                           child: const Text('Stop Recording'),
                         )
