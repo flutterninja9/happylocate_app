@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:happylocate_app/core/errors/failure.dart';
 import 'package:happylocate_app/core/usecase/usecase.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/inventory_item.dart';
 import 'package:happylocate_app/features/inventory_management/domain/usecases/add_inventory_item.dart';
@@ -27,8 +29,7 @@ class InventoryListingBloc
       (event, emit) => event.map(
         getInventory: (eventData) async => _handleGetInventory(eventData, emit),
         deleteItem: (eventData) async => _handleDeleteItem(eventData, emit),
-        updateInventoryItemQty: (eventData) async =>
-            _handleUpdateInventoryItem(eventData, emit),
+        updateInventoryItemQty: (eventData) async => _handleUpdateInventoryItem(eventData, emit),
         addItem: (eventData) async => _handleAddItem(eventData, emit),
       ),
     );
@@ -41,17 +42,8 @@ class InventoryListingBloc
     emit(const _Loading());
     await Future.delayed(const Duration(seconds: 1));
     final failureOrResult = await getInventoryItems(NoParams());
-    emit(failureOrResult.fold(
-      (f) {
-        return _Failure(f.message);
-      },
-      (r) {
-        if (r.isEmpty) {
-          return const _InventoryEmpty();
-        }
-        return _Loaded(r);
-      },
-    ));
+    emit(_foldResult(failureOrResult));
+
     return;
   }
 
@@ -63,17 +55,8 @@ class InventoryListingBloc
     await Future.delayed(const Duration(seconds: 1));
     final failureOrResult =
         await deleteInventoryItem(DeleteInventoryItemParams(item: event.item));
-    emit(failureOrResult.fold(
-      (f) {
-        return _Failure(f.message);
-      },
-      (r) {
-        if (r.isEmpty) {
-          return const _InventoryEmpty();
-        }
-        return _Loaded(r);
-      },
-    ));
+
+    emit(_foldResult(failureOrResult));
     return;
   }
 
@@ -87,17 +70,8 @@ class InventoryListingBloc
     final failureOrResult = await addInventoryItem(
       AddInventoryItemParams(item: event.item.copyWith(quantity: event.qty)),
     );
-    emit(failureOrResult.fold(
-      (f) {
-        return _Failure(f.message);
-      },
-      (r) {
-        if (r.isEmpty) {
-          return const _InventoryEmpty();
-        }
-        return _Loaded(r);
-      },
-    ));
+
+    emit(_foldResult(failureOrResult));
     return;
   }
 
@@ -109,14 +83,24 @@ class InventoryListingBloc
     await Future.delayed(const Duration(seconds: 1));
     final failureOrResult =
         await addInventoryItem(AddInventoryItemParams(item: event.item));
-    emit(failureOrResult.fold(
+        
+    emit(_foldResult(failureOrResult));
+    return;
+  }
+
+  InventoryListingState _foldResult(
+    Either<Failure, List<InventoryItem>> failureOrResult,
+  ) {
+    return failureOrResult.fold(
       (f) {
         return _Failure(f.message);
       },
       (r) {
+        if (r.isEmpty) {
+          return const _InventoryEmpty();
+        }
         return _Loaded(r);
       },
-    ));
-    return;
+    );
   }
 }
