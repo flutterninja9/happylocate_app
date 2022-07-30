@@ -83,6 +83,7 @@ class InventoryListingBloc
   ) async {
     emit(const _Loading());
     await Future.delayed(const Duration(seconds: 1));
+
     final failureOrResult = await addInventoryItem(
       AddInventoryItemParams(item: event.item.copyWith(quantity: event.qty)),
     );

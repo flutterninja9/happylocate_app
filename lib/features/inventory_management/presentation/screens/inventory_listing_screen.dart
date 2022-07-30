@@ -5,6 +5,7 @@ import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 import 'package:happylocate_app/di.dart';
 import 'package:happylocate_app/features/inventory_management/data/models/temp_inventory.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/bloc/inventory_listing_bloc.dart';
+import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_item_saved_screen.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/widgets/inventory_view.dart';
 
 class InventoryListingScreen extends StatefulWidget {
@@ -37,7 +38,12 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
               ),
               loaded: (state) => InventoryView(
                 items: state.items,
-                onCheckout: () {},
+                onCheckout: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const InventoryItemSavedScreen()),
+                  );
+                },
                 onItemRemoved: (item) => context
                     .read<InventoryListingBloc>()
                     .add(InventoryListingEvent.deleteItem(item)),

@@ -17,26 +17,29 @@ class InventoryLocalDataSourceImpl implements InventoryLocalDataSource {
   Future<List<InventoryItemModel>> addInventoryItem(
     InventoryItemModel item,
   ) async {
-    final List<InventoryItemModel> items = await getInventoryItems();
-    for (int i = 0; i < items.length; i++) {
-      final currentItem = items[i];
-      if (currentItem.id == item.id) {
-        items[i] = item;
-        await cacheService.setData(
-          kInventoryItemsKey,
-          jsonEncode(items.map((model) => model.toJson()).toList()),
-        );
-        return items;
+    if (item.quantity! > 0) {
+      final List<InventoryItemModel> items = await getInventoryItems();
+      for (int i = 0; i < items.length; i++) {
+        final currentItem = items[i];
+        if (currentItem.id == item.id) {
+          items[i] = item;
+          await cacheService.setData(
+            kInventoryItemsKey,
+            jsonEncode(items.map((model) => model.toJson()).toList()),
+          );
+          return items;
+        }
       }
+
+      items.add(item);
+      await cacheService.setData(
+        kInventoryItemsKey,
+        jsonEncode(items.map((model) => model.toJson()).toList()),
+      );
+
+      return items;
     }
-
-    items.add(item);
-    await cacheService.setData(
-      kInventoryItemsKey,
-      jsonEncode(items.map((model) => model.toJson()).toList()),
-    );
-
-    return items;
+    return await deleteInventoryItem(item);
   }
 
   @override
