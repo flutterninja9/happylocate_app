@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:happylocate_app/core/app/typography.dart';
 import 'package:happylocate_app/core/extensions/build_context.dart';
@@ -15,14 +16,17 @@ class InventoryHomescreen extends StatelessWidget {
       page: Column(
         children: [
           const SizedBox(height: 24),
-          Container(
-            height: context.height * 0.4,
-            width: context.width,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey, width: 1),
+          DottedBorder(
+            color: Colors.grey,
+            dashPattern: const [15],
+            radius: const Radius.circular(8),
+            borderType: BorderType.RRect,
+            child: SizedBox(
+              height: context.height * 0.4,
+              width: context.width,
+              child:
+                  Center(child: Text('Save your inventory', style: headline4)),
             ),
-            child: Center(child: Text('Save your inventory', style: headline4)),
           ),
           const SizedBox(height: 36),
           CTAButton(
