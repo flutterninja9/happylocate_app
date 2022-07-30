@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:happylocate_app/core/app/color_pallete.dart';
 import 'package:happylocate_app/core/app/typography.dart';
+import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 
 class InventoryItemSavedScreen extends StatelessWidget {
   const InventoryItemSavedScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return HlScaffold(
+      page: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

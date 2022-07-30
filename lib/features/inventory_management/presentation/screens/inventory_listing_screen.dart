@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:happylocate_app/core/app/color_pallete.dart';
 import 'package:happylocate_app/core/app/typography.dart';
 import 'package:happylocate_app/core/extensions/build_context.dart';
+import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/dimesion.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/inventory_item.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/item_type.dart';
@@ -84,11 +85,11 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Inventory listing', style: headline),
-      ),
-      body: Stack(
+    return HlScaffold(
+      appBarTitle: 'Inventory listing',
+      // Because of bottomsheet's extra content shift
+      applyDefaultPadding: false,
+      page: Stack(
         children: [
           NotificationListener<ScrollNotification>(
             onNotification: (_) {
@@ -98,7 +99,7 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
               return true;
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 4),
               child: CustomScrollView(
                 slivers: [
                   SliverList(
@@ -254,7 +255,7 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
             child: Container(
               height: context.height * 0.2,
               width: context.width,
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: const BoxDecoration(
                 color: canvasColor,
                 boxShadow: [
@@ -276,6 +277,7 @@ class _InventoryListingScreenState extends State<InventoryListingScreen> {
                       const Spacer(),
                       Text(
                         "43 objects",
+                        textAlign: TextAlign.end,
                         style: title,
                       ),
                     ],

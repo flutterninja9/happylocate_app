@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:happylocate_app/core/app/color_pallete.dart';
+import 'package:happylocate_app/core/app/typography.dart';
 
 class CTAButton extends StatelessWidget {
   final String label;
@@ -28,11 +28,7 @@ class CTAButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: GoogleFonts.inter(
-              color: textColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
+            style: ctaBtnTypo,
           ),
         ),
       ),

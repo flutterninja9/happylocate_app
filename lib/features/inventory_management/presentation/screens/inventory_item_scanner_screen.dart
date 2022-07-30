@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:happylocate_app/core/app/typography.dart';
 import 'package:happylocate_app/core/extensions/build_context.dart';
+import 'package:happylocate_app/core/widgets/hl_scaffold.dart';
 import 'package:happylocate_app/features/inventory_management/presentation/screens/inventory_listing_screen.dart';
 
 class InventoryItemScannerScreen extends StatelessWidget {
@@ -8,11 +8,9 @@ class InventoryItemScannerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Camera View', style: headline),
-      ),
-      body: Column(
+    return HlScaffold(
+      appBarTitle: 'Camera View',
+      page: Column(
         children: [
           Container(
             height: context.height * 0.8,
