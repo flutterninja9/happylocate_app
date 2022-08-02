@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:happylocate_app/core/app/consts.dart';
 import 'package:happylocate_app/core/app/typography.dart';
 import 'package:happylocate_app/core/extensions/build_context.dart';
 import 'package:happylocate_app/features/inventory_management/domain/entities/inventory_item.dart';
@@ -71,7 +72,7 @@ class _InventoryFormState extends State<InventoryForm> {
               if (value != null && value.isNotEmpty) {
                 return null;
               }
-              return 'Please enter a name';
+              return nameValidationMessage;
             },
             decoration: const InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -97,7 +98,7 @@ class _InventoryFormState extends State<InventoryForm> {
                           if (value != null && value.isNotEmpty) {
                             return null;
                           }
-                          return 'Not valid';
+                          return dimesionValidationMessage;
                         },
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 8),
@@ -117,7 +118,7 @@ class _InventoryFormState extends State<InventoryForm> {
                           if (value != null && value.isNotEmpty) {
                             return null;
                           }
-                          return 'Not valid';
+                          return dimesionValidationMessage;
                         },
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
@@ -141,6 +142,7 @@ class _InventoryFormState extends State<InventoryForm> {
                   ),
                   items: List.generate(100, (index) => index)
                       .map((index) => DropdownMenuItem(
+                            key: ValueKey('number $index'),
                             value: index,
                             child: Text(
                               "Qty: $index",
@@ -167,7 +169,10 @@ class _InventoryFormState extends State<InventoryForm> {
             child: DropdownButtonFormField<ItemType>(
               value: widget.item.itemType,
               items: ItemType.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.name)))
+                  .map((e) => DropdownMenuItem(
+                      key: ValueKey('type ${e.name}'),
+                      value: e,
+                      child: Text(e.name)))
                   .toList(),
               onChanged: widget.onItemTypeChanged,
             ),

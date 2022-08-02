@@ -18,7 +18,7 @@ class InventoryItem extends Entity {
     required this.dimension,
     required this.itemType,
     required this.quantity,
-  });
+  }) : assert(quantity < 100);
 
   factory InventoryItem.empty() {
     return InventoryItem(
@@ -26,7 +26,7 @@ class InventoryItem extends Entity {
       name: '',
       dimension: Dimension.zero(),
       itemType: ItemType.fragile,
-      quantity: 1,
+      quantity: 0,
     );
   }
 
